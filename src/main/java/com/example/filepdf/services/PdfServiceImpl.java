@@ -1,17 +1,22 @@
 package com.example.filepdf.services;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
+import com.azure.storage.blob.BlobClient;
+import com.azure.storage.blob.BlobContainerClient;
+import com.azure.storage.blob.BlobServiceClientBuilder;
 import com.itextpdf.html2pdf.ConverterProperties;
 import com.itextpdf.html2pdf.HtmlConverter;
 import com.itextpdf.html2pdf.resolver.font.DefaultFontProvider;
@@ -23,29 +28,35 @@ public class PdfServiceImpl implements IPdfService {
 
 	@Autowired
 	private TemplateEngine templateEngine;
+	@Autowired
+	private Environment environment;
 
 	@Override
 	public String generatorFilePdf(Map<String, Object> params) {
-		System.out.println("Service --");
 
+		// Generate html content
 		String htmlContent = generateHtmlContent(params);
-		// String htmlContent = templateEngine.process("templatePdf", context);
+
 		try {
+			// Generate pdf
 			ByteArrayOutputStream byteArrayOutputStream = generatePdf(htmlContent);
 
 			// Save file pdf
-			System.out.println("save file");
-			saveFilePdf(byteArrayOutputStream);
+			String blobUrl = uploadFilePdf(byteArrayOutputStream);
 
-			return "Success";
+			return blobUrl;
 		} catch (IOException e) {
 			e.printStackTrace();
 			logger.error("Error: {0}", e);
+			return "Error";
 		}
-
-		return "Success";
 	}
 
+	/**
+	 * Generates HTML content using the provided parameters.
+	 * @param params a map of key-value pairs containing the variables to be used in the HTML template
+	 * @return the generated HTML content as a string
+	 */
 	private String generateHtmlContent(Map<String, Object> params) {
 		Context context = new Context();
 		context.setVariables(params);
@@ -54,13 +65,18 @@ public class PdfServiceImpl implements IPdfService {
 		return htmlContent;
 	}
 
+	/**
+	 * Generates a PDF document from the given HTML content.
+	 *
+	 * @param htmlContent the HTML content to convert to PDF
+	 * @return a ByteArrayOutputStream containing the generated PDF document
+	 */
 	private ByteArrayOutputStream generatePdf(String htmlContent) {
 		ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
 
 		PdfWriter pdfWriter = new PdfWriter(byteArrayOutputStream);
 
-		DefaultFontProvider defaultFont = new DefaultFontProvider(false, true,
-				false);
+		DefaultFontProvider defaultFont = new DefaultFontProvider(false, true, false);
 
 		ConverterProperties converterProperties = new ConverterProperties();
 
@@ -73,12 +89,28 @@ public class PdfServiceImpl implements IPdfService {
 		return byteArrayOutputStream;
 	}
 
-	private void saveFilePdf(ByteArrayOutputStream byteArrayOutputStream) throws IOException {
-		// File pdfFile = new File("src/main/resources/pdf/" + "test.pdf");
-		File pdfFile = new File("src/main/resources/pdf/" + "template.pdf");
-		pdfFile.getParentFile().mkdirs();
-		byteArrayOutputStream.writeTo(new java.io.FileOutputStream(pdfFile));
-		byteArrayOutputStream.close();
-		byteArrayOutputStream.flush();
+	/**
+	 * Uploads a PDF file to Azure Blob Storage.
+	 * 
+	 * @param byteArrayOutputStream the ByteArrayOutputStream containing the PDF file to upload
+	 * @return the URL of the uploaded PDF file
+	 * @throws IOException if there is an error uploading the file
+	 */
+	private String uploadFilePdf(ByteArrayOutputStream byteArrayOutputStream) throws IOException {
+		String connectString = environment.getProperty("connectString");
+		String containerName = environment.getProperty("containerName");
+
+		BlobContainerClient blobContainerClient = new BlobServiceClientBuilder()
+				.connectionString(connectString).buildClient()
+				.getBlobContainerClient(containerName);
+
+		BlobClient blobClient = blobContainerClient.getBlobClient("template.pdf");
+
+		InputStream inputStream = new ByteArrayInputStream(byteArrayOutputStream.toByteArray());
+		blobClient.upload(inputStream, inputStream.available(), true);
+
+		String blobUrl = blobClient.getBlobUrl();
+
+		return blobUrl;
 	}
 }
