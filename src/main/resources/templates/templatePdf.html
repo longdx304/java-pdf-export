@@ -1,0 +1,1132 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<style>
+			.w-full {
+				width: 100%;
+			}
+			.h-full {
+				height: 100%;
+			}
+			body {
+				margin: 0;
+			}
+			.pdf-main {
+				font-family: "Poppins";
+			}
+
+			.main-wrapper-pdf {
+				max-height: 6732px !important;
+				overflow: hidden !important;
+			}
+
+			.flex-between {
+				display: flex;
+				flex-direction: row;
+				justify-content: space-between;
+			}
+
+			.flex-column-item {
+				flex-grow: 1;
+				flex-shrink: 0;
+				flex-basis: 40%;
+			}
+
+			.pdf-hero {
+				width: 100%;
+				height: 600px;
+				background-image: url("https://fecon.com.vn/public/media/du_an/dau_tu_ha_tang_nang_luong.jpg");
+				background-position: center;
+			}
+
+			.pdf-hero-sub {
+				display: flex;
+				flex-direction: column;
+				width: 100%;
+				align-items: center;
+				background-color: #f7f7f7;
+				padding: 20px 0;
+			}
+
+			.hero-logo21 {
+				height: 60px;
+			}
+
+			.deposit-emax-logo3 {
+				width: 135px;
+				height: 62px;
+				margin-top: 10px;
+				margin-right: 10px;
+			}
+
+			.page1,
+			.page2,
+			.page3,
+			.page4,
+			.page6 {
+				max-height: 1122px;
+				min-height: 1122px;
+				display: flex;
+				flex-direction: column;
+			}
+
+			/* Background */
+			.bg-blue {
+				background-color: #2b2857;
+			}
+
+			/* Margin Padding */
+			.m-0 {
+				margin: 0;
+			}
+
+			.p-10 {
+				padding: 10px;
+			}
+
+			/* Text */
+
+			.text-white {
+				color: #fff;
+			}
+			.text-22 {
+				font-size: 22px;
+			}
+
+			.pdf-upper {
+				display: flex;
+				flex-direction: row;
+				justify-content: space-between;
+				background-color: #2b2857;
+				padding: 10px;
+				width: 100%;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="pdf-main">
+			<div class="main-wrapper-pdf">
+				<div class="page1">
+					<div
+						class="flex-between p-10 w-full bg-blue"
+						style="justify-content: space-between"
+					>
+						<div class="flex-column-item">
+							<img
+								src="https://simplesolution.dev/images/Logo_S_v1.png"
+								class="hero-logo21"
+							/>
+							<p class="text-22 text-white m-0">This is header</p>
+						</div>
+						<div class="">
+							<img
+								src="https://simplesolution.dev/images/Logo_S_v1.png"
+								alt="logo"
+								class="deposit-emax-logo3"
+							/>
+						</div>
+					</div>
+					<!-- <div class="pdf-hero"></div>
+					<div class="page1-user-wrapper">
+						<img
+							src="https://simplesolution.dev/images/Logo_S_v1.png"
+							alt="panel"
+							class="page1-user-img"
+						/>
+						<div class="page1-user-column">
+							<div class="page1-user-flex">
+								<div class="page1-left-col">
+									<p
+										class="page1-user-name text"
+										th:text="${name}"
+									></p>
+									<p
+										class="page1-user-address text middle"
+										th:text="${street} + ${number}"
+									></p>
+									<p
+										class="page1-user-address text middle"
+										th:text="${postalCode} + ${city}"
+									></p>
+									<p
+										class="page1-user-address text middle"
+										th:text="${phoneNumber}"
+									></p>
+									<p
+										class="page1-user-address middle text"
+										th:text="${email}"
+									></p>
+									<p
+										class="page1-user-address middle text"
+										th:if="${vatNumber != null}"
+									>
+										VAT #:
+										<span th:text="${vatNumber}"></span>
+									</p>
+								</div>
+								<div class="align-right3">
+									<p
+										class="page1-user-address text"
+										th:text="'Ref :' + ${requestNo}"
+									></p>
+									<p
+										class="page1-user-address middle text"
+										th:text="'Date:' + ${today}"
+									></p>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="help-wrap">
+						<div class="help-col">
+							<p class="orange-help text margin-b">Expert</p>
+							<p class="orange-help text">Service Client</p>
+						</div>
+						<div class="help-col">
+							<div class="help-flex margin-b">
+								<img
+									src="https://simplesolution.dev/images/Logo_S_v1.png"
+									class="help-img"
+								/>
+								<p
+									class="help-text text"
+									th:text="${phone}"
+								></p>
+							</div>
+							<div class="help-flex">
+								<img
+									src="https://simplesolution.dev/images/Logo_S_v1.png"
+									class="help-img"
+								/>
+								<p class="help-text text">02 425 04 00</p>
+							</div>
+						</div>
+						<div class="help-col">
+							<div class="help-flex margin-b">
+								<img
+									src="https://simplesolution.dev/images/Logo_S_v1.png"
+									class="help-img"
+								/>
+								<p
+									class="help-text text"
+									th:text="${assignee}"
+								></p>
+							</div>
+							<div class="help-flex">
+								<img
+									src="https://simplesolution.dev/images/Logo_S_v1.png"
+									class="help-img"
+								/>
+								<p class="help-text text">info@emaxsolar.be</p>
+							</div>
+						</div>
+					</div> -->
+					<!-- <div class="footer">
+						<p class="footer-text text">
+							EMAX SPRL, Brusselstraat 715, Dilbeek, Belgium
+						</p>
+						<p class="footer-text text footer-middle">
+							Tel: 02 425 04 00, info@emaxgroup.eu,
+							www.emaxgroup.eu
+						</p>
+						<p class="footer-text text">
+							Btw numéro: BE 0670429158, IBAN: BE71 7512 0847
+							5369, BIC: AXABBE22
+						</p>
+					</div> -->
+				</div>
+				<!-- <div class="page2 pdfPage">
+					<div>
+					<p class="page2-header text bold">{{ ('visual') }}</p>
+					<div class="flex-middle page2-flex-middle">
+						<img :src="imgSource" class="page2-map" />
+					</div>
+					<p class="page2-header text bold">{{ ('details') }}</p>
+					<div class="page2-row">
+						<p class="row-text text">{{ ('consumption') }}</p>
+						<p class="row-text text">{{ yearlyConsumption }} kWh</p>
+					</div>
+					<div class="page2-row">
+						<p class="row-text text">{{ ('electricType') }}</p>
+						<p class="row-text text">
+							{{ phaseType }}
+						</p>
+					</div>
+					<div class="page2-row">
+						<p class="row-text text">{{ ('roofType') }}</p>
+						<p class="row-text text">{{ roofType }}</p>
+					</div>
+					<div class="page2-row">
+						<p class="row-text text">{{ ('roofSize') }}</p>
+						<p class="row-text text">{{ roofSize }} m&#178;</p>
+					</div>
+					<div class="page2-row">
+						<p class="row-text text">{{ ('roofSlope') }}</p>
+						<p class="row-text text">{{ roofSlope }}&#186;</p>
+					</div>
+					<div class="page2-row">
+						<p class="row-text text">{{ ('roofOrientation') }}</p>
+						<p class="row-text text">{{ roofOrientation }}</p>
+					</div>
+					<div class="page2-row">
+						<p class="row-text text">{{ ('houseAge') }}</p>
+						<p class="row-text text">
+							{{
+								houseAge == 10 ? '>10 ' + ('year') : '<10 ' + ('year')
+							}}
+						</p>
+					</div>
+					</div>
+					<div class="footer">
+						<p class="footer-text text">
+							EMAX {{ ('SPRL') }}, Brusselstraat 715, Dilbeek, Belgium
+						</p>
+						<p class="footer-text text footer-middle">
+							Tel: 02 425 04 00, info@emaxgroup.eu, www.emaxgroup.eu
+						</p>
+						<p class="footer-text text">
+							{{ ('btw') }} #: BE 0670429158, IBAN: BE71 7512 0847 5369, BIC: AXABBE22
+						</p>
+					</div>
+				</div>
+				<div class="page3 pdfPage">
+					<div>
+					<div class="page3-flex-between">
+						<p class="page3-header text">{{ ('offerTill') }} {{ date }}</p>
+						<p class="page3-header text">
+							{{ name }} - Nb {{ requestNo }}
+						</p>
+					</div>
+		
+					<div
+						class="page3-table-header-wrapper"
+						v-if="offerDetails.solarInvestment > 0"
+					>
+						<p class="page3-header-table page3-header1 text">
+							{{ ('solarPanels') }} {{ offerDetails.maxCapacity }} kW
+							{{ ('crest') }}
+						</p>
+						<p class="page3-header-table page3-header2 text"></p>
+						<p class="page3-header-table page3-header3 text">
+							{{ ('quantity') }}
+						</p>
+					</div>
+					<div
+						class="page3-table-header-wrapper"
+						v-if="offerDetails.inverterInvestment > 0"
+					>
+						<p class="page3-header-table page3-header1 text">
+							{{ ('inverter') }}
+						</p>
+						<p class="page3-header-table page3-header2 text"></p>
+						<p class="page3-header-table page3-header3 text">
+							{{ ('quantity') }}
+						</p>
+					</div>
+					<div
+						class="page3-table-row"
+						v-if="offerDetails.solarInvestment > 0"
+					>
+						<p class="black text table1">
+							{{ ('panel') }}<br />
+							{{ ('solar') }}
+						</p>
+						<p class="blue text table2a">
+							{{ panel }},
+							<br />
+							{{ ('manWarranty') }} {{ offerDetails.warranty }}
+							{{ ('year') }}
+						</p>
+						<p class="blue text table4">{{ offerDetails.noOfPanels }}</p>
+					</div>
+					<div
+						class="page3-table-row"
+						v-if="offerDetails.solarInvestment > 0 || offerDetails.inverterInvestment > 0"
+					>
+						<p class="black text table1">{{ ('inverter') }}</p>
+						<p class="blue text table2a">
+							{{ inverterType ? inverterType + "," : 'Huawei SUN 2000,' }} <br />
+							{{ ('manWarranty') }} 10 {{ ('year') }}
+						</p>
+						<p class="blue text table4">
+							{{
+								offerDetails.noOfInverters
+									? offerDetails.noOfInverters
+									: '-'
+							}}
+						</p>
+					</div>
+					<div
+						class="page3-table-row"
+						v-if="offerDetails.noOfOptimizers > 0"
+					>
+						<p class="black text table1">Optimizers</p>
+						<p class="blue text table2a">
+							{{ optimizer }} optimizer
+						</p>
+						<p class="blue text table4">
+							{{
+								offerDetails.noOfOptimizers
+									? offerDetails.noOfOptimizers
+									: '-'
+							}}
+						</p>
+					</div>
+					<div
+						class="page3-table-row"
+						v-if="offerDetails.solarInvestment > 0 || offerDetails.inverterInvestment > 0"
+					>
+						<p class="black text table1">{{ ('installation') }}</p>
+						<p class="blue text table2a">
+							{{ ('installation') }}, {{ ('connection') }}<br />
+							{{ ('service') }}
+						</p>
+						<p class="blue text table4">1</p>
+					</div>
+					<div
+						class="page3-table-row"
+						v-if="
+							offerDetails.solarInvestmentWithoutVAT &&
+							offerDetails.solarExtraCostItem
+						"
+					>
+						<p class="black text table1">{{ ('extra') }}</p>
+						<p class="blue text table2a">
+							{{ offerDetails.solarExtraCostItem }}
+						</p>
+						<p class="blue text table4">1</p>
+					</div>
+					<div
+						class="page3-table-row no-line"
+						v-if="offerDetails.solarInvestment > 0"
+					>
+						<p class="black text table1a"></p>
+						<p class="orange text table3a bold">{{ ('priceTotal') }}</p>
+						<p class="orange text table4 bold">
+							{{ getMoney(getSolar) }}
+						</p>
+					</div>
+					<div
+						class="page3-table-row no-line"
+						v-if="offerDetails.inverterInvestment > 0"
+					>
+						<p class="black text table1a"></p>
+						<p class="orange text table3a bold">{{ ('priceTotal') }}</p>
+						<p class="orange text table4 bold">
+							{{ getMoney(getInverter) }}
+						</p>
+					</div>
+					<div
+						class="page3-table-header-wrapper"
+						v-if="offerDetails.batteryInvestmentWithoutVAT"
+					>
+						<p class="page3-header-table page3-header1 text">
+							{{ ('batterySystem') }}
+							{{
+								Number(offerDetails.batteryCapacity) *
+								Number(offerDetails.noOfBatteries)
+							}}
+							kWh
+						</p>
+						<p class="page3-header-table page3-header2 text"></p>
+						<p class="page3-header-table page3-header3 text">
+							{{ ('quantity') }}
+						</p>
+					</div>
+					<div
+						class="page3-table-row"
+						v-if="offerDetails.batteryInvestmentWithoutVAT"
+					>
+						<p class="black text table1">
+							{{ ('batteries') }}<br />
+							{{ ('domestic') }}
+						</p>
+						<p class="blue text table2a">
+							{{
+								batteryType
+									? batteryType + ","
+									: offerDetails.batteryBrand +
+										' ' +
+										offerDetails.batteryModel + ","
+							}}
+							<br />
+							{{ ('manWarranty') }} 10 {{ ('year') }}
+						</p>
+						<p class="blue text table4">
+							{{ offerDetails.noOfBatteries }}
+						</p>
+					</div>
+					<div
+						class="page3-table-row"
+						v-if="offerDetails.batteryInvestmentWithoutVAT"
+					>
+						<p class="black text table1">{{ ('installation') }}</p>
+						<p class="blue text table2a">
+							{{ ('installation') }}, {{ ('connection') }}<br />
+							{{ ('service') }}
+						</p>
+						<p class="blue text table4">1</p>
+					</div>
+					<div
+						class="page3-table-row"
+						v-if="
+							offerDetails.batteryInvestmentWithoutVAT &&
+							offerDetails.batteryExtraCostItem
+						"
+					>
+						<p class="black text table1">{{ ('extra') }}</p>
+						<p class="blue text table2a">
+							{{ offerDetails.batteryExtraCostItem }}
+						</p>
+						<p class="blue text table4">1</p>
+					</div>
+					<div
+						class="page3-table-row no-line"
+						v-if="offerDetails.batteryInvestmentWithoutVAT"
+					>
+						<p class="black text table1a"></p>
+						<p class="orange text table3a bold">{{ ('priceTotal') }}</p>
+						<p class="orange text table4 bold">
+							{{ getMoney(getBattery) }}
+						</p>
+					</div>
+					<div
+						class="page3-table-row no-line"
+						v-if="offerDetails.batteryInvestmentWithoutVAT"
+					>
+						<p class="blue text table-long">
+							{{ ('recycle') }}
+						</p>
+						<p class="blue text table4">{{ getMoney(Number(getRecycling)) }}</p>
+					</div>
+					<div class="page3-table-row no-line">
+						<p class="black text table1-long bold">
+							{{ ('paymentTerms') }} <br />
+							- {{ ('20accept') }} <br />
+							- {{ ('80accept') }}
+						</p>
+						<p class="blue text table5"></p>
+						<p class="blue text table3">{{ ('subTotal') }}:</p>
+						<p class="blue text table4">
+							{{
+								getMoney(
+									Number(getBattery) +
+									Number(getInverter) +
+										Number(getSolar) +
+										Number(getRecycling ? getRecycling : 0)
+								)
+							}}
+						</p>
+					</div>
+					<div class="page3-table-row no-line slim-padding">
+						<p class="black text table1-long small sig">
+							<br /><br />
+							{{ ('signature') }}
+						</p>
+								<p class="blue text table-long">
+									{{ ('btw') }}
+									{{ getVAT === 0 ? ('absent') : '(' + getVAT * 100 + '%)' }}
+								</p>
+						<p class="blue text table4">
+							{{
+								getMoney(
+									(Number(getBattery) +
+									Number(getInverter) +
+										Number(getSolar) +
+										Number(getRecycling ? getRecycling : 0)) *
+										getVAT
+								)
+							}}
+						</p>
+					</div>
+					<div class="orange-flex no-line">
+						<div class="orange-row">
+						<p class="blue text table1-long sigDate"><br />Date _____/_____/2023</p>
+						</div>
+						<div class="orange-row">
+						<p class="white text table3orange bold orange-back">{{ ('totalPrice') }}</p>
+						<p class="white text table4orange bold orange-back">
+							{{ getMoney(Number(getTotal)) }}
+						</p>
+						</div>
+					</div>
+					<div class="discount-wrap" v-if="comDiscount.comDiscount && offerDetails.batteryInvestmentWithoutVAT">
+						<p class="discount-text white text" v-if="lang === 'fr' || lang === 'en'">
+						Si vous signez et renvoyez avant le <span class="bold">{{ getWeek() }}</span>, vous bénéficierez d'une <span class="bold">réduction de {{ getMoney(comDiscount.comDiscountAmount) }}</span>. Les prix réduits seront de <span class="bold">{{ getMoney(Number(getTotal - comDiscount.comDiscountAmount)) }}</span>.
+						</p>
+						<p class="discount-text white text" v-if="lang === 'nl'">
+						Als je voor <span class="bold">{{ getWeek() }}</span> tekent en terugstuurt, ontvang je <span class="bold">{{ getMoney(comDiscount.comDiscountAmount) }} korting</span>. De gereduceerde prijzen zijn <span class="bold">{{ getMoney(Number(getTotal - comDiscount.comDiscountAmount)) }}</span>.
+						</p>
+					</div>
+					<div :class="lang === 'nl' ? 'discount-wrap-box2' : 'discount-wrap-box'" v-if="comDiscount.comDiscount && !offerDetails.batteryInvestmentWithoutVAT">
+						<p class="discount-text2 white text" v-if="lang === 'fr' || lang === 'en'">
+						Si vous signez et renvoyez avant le <span class="bold">{{ getWeek() }}</span>,
+						</p>
+						<p class="discount-text2 white text" v-if="lang === 'fr' || lang === 'en'">
+							vous bénéficierez d'une <span class="bold">réduction de {{ getMoney(comDiscount.comDiscountAmount) }}</span>.
+						</p>
+						<p class="discount-text2 white text" v-if="lang === 'fr' || lang === 'en'">
+							Les prix réduits seront de <span class="bold">{{ getMoney(Number(getTotal - comDiscount.comDiscountAmount)) }}.</span>
+						</p>
+						<p class="discount-text2 white text" v-if="lang === 'nl'">
+						Als je voor <span class="bold">{{ getWeek() }}</span> 
+						</p>
+						<p class="discount-text2 white text" v-if="lang === 'nl'">
+							tekent en terugstuurt, ontvang je <span class="bold">{{ getMoney(comDiscount.comDiscountAmount) }} korting</span>.
+						</p>
+						<p class="discount-text2 white text" v-if="lang === 'nl'">
+							De gereduceerde prijzen zijn <span class="bold">{{ getMoney(Number(getTotal - comDiscount.comDiscountAmount)) }}.</span>
+						</p>
+					</div>
+					</div>
+					<div class="footer">
+						<p class="footer-text text">
+							EMAX {{ ('SPRL') }}, Brusselstraat 715, Dilbeek, Belgium
+						</p>
+						<p class="footer-text text footer-middle">
+							Tel: 02 425 04 00, info@emaxgroup.eu, www.emaxgroup.eu
+						</p>
+						<p class="footer-text text">
+							{{ ('btw') }} #: BE 0670429158, IBAN: BE71 7512 0847 5369, BIC: AXABBE22
+						</p>
+					</div>
+				</div>
+				<div class="page4 pdfPage">
+					<div>
+					<p class="page2-header text bold">{{ ('analyze') }}</p>
+					<div class="page2-row">
+						<p class="row-text text bold">{{ ('investment') }}</p>
+					</div>
+					<div class="page2-row small-row">
+						<p class="row-text text">{{ ('price') }}</p>
+						<p
+							:class="
+								offerDetails.premie > 0
+									? 'row-text text'
+									: 'row-text text bold'
+							"
+						>
+							{{ getMoney(Number(getTotal)) }}
+						</p>
+					</div>
+					<div
+						v-if="offerDetails.premie > 0"
+						class="page2-row small-row"
+					>
+						<p class="row-text text">{{ ('prime') }}</p>
+						<p class="row-text text">
+							{{ getMoney(offerDetails.premie) }}
+						</p>
+					</div>
+					<div
+						v-if="offerDetails.premie > 0"
+						class="page2-row small-row"
+					>
+						<p class="row-text text">{{ ('investmentWO') }}</p>
+						<p class="row-text text bold">
+							{{
+								getMoney(Number(getTotal) - Number(offerDetails.premie))
+							}}
+						</p>
+					</div>
+					<div
+						class="page2-row"
+						v-if="offerDetails.solarInvestment > 0"
+					>
+						<p class="row-text text bold">{{ ('advantage') }}</p>
+					</div>
+					<div
+						v-if="
+							offerDetails.greenCertificate > 0 &&
+							offerDetails.solarInvestment > 0
+						"
+						class="page2-row small-row"
+					>
+						<p class="row-text text">{{ ('green') }}</p>
+						<p class="row-text text bold">
+							{{ getMoney(offerDetails.greenCertificate) }}
+						</p>
+					</div>
+					<div
+						class="page2-row small-row"
+						v-if="offerDetails.solarInvestment > 0"
+					>
+						<p class="row-text text">{{ ('25gain') }}</p>
+						<p class="row-text text bold">
+							{{ getMoney(offerDetails.totalRevenue) }}
+						</p>
+					</div>
+					<div
+						class="page2-row small-row"
+						v-if="offerDetails.solarInvestment > 0"
+					>
+						<p class="row-text text">{{ ('gainYear') }}</p>
+						<p class="row-text text">
+							{{ getMoney(offerDetails.gainPerYear) }}
+						</p>
+					</div>
+					<div
+						class="page2-row small-row"
+						v-if="offerDetails.solarInvestment > 0"
+					>
+						<p class="row-text text">{{ ('roi') }}</p>
+						<p class="row-text text">
+							{{ offerDetails.returnOnInvestment }} {{ ('year') }}
+						</p>
+					</div>
+					<p class="page2-header text bold margin-top">
+						{{ ('az') }}
+					</p>
+					<div class="services-flex">
+						<div class="services-item">
+							<img src="/services1.png" class="services-img" alt="services" />
+							<div class="text orange bold header center">
+								{{ ('installIn') }}<br />
+								{{ ('weeks') }}
+							</div>
+							<div
+								class="text blue center small"
+								v-if="lang === 'fr' || lang === 'en'"
+							>
+								Nous vous offrons la possibilité
+								 d’installer vos panneaux solaires
+									et vos batteries dans un meilleur
+									 délai
+							</div>
+							<div class="text blue center small" v-if="lang === 'nl'">
+								Wij bieden u de<br />
+								mogelijkheid om uw<br />
+								zonnepanelen en<br />
+								batterijen binnen 6 weken<br />
+								te installeren
+							</div>
+						</div>
+						<div class="services-item">
+							<img src="/services2.png" class="services-img" alt="services" />
+							<div class="text orange bold header center">
+								{{ ('installers') }}<br />
+								{{ ('experienced') }}
+							</div>
+							<div
+								class="text blue center small"
+								v-if="lang === 'fr' || lang === 'en'"
+							>
+								Nous ne travaillons qu’avec<br />
+								des installateurs certifiés<br />
+								RESCert avec plus de 10<br />
+								années d’expérience
+							</div>
+							<div class="text blue center small" v-if="lang === 'nl'">
+								Wij werken alleen met<br />
+								RESCert gecertificeerde<br />
+								installateurs met meer<br />
+								dan 10 jaar ervaring
+							</div>
+						</div>
+						<div class="services-item">
+							<img src="/services3.png" class="services-img" alt="services" />
+							<div class="text orange bold header center">
+								{{ ('price') }}<br />
+								{{ ('transparent') }}
+							</div>
+							<div
+								class="text blue center small"
+								v-if="lang === 'fr' || lang === 'en'"
+							>
+								Nous vous communiquons<br />
+								des prix transparents et<br />
+								restons connecté avec<br />
+								vous
+							</div>
+							<div class="text blue center small" v-if="lang === 'nl'">
+								Wij geven u transparante<br />
+								prijzen en blijven met<br />
+								u in contact
+							</div>
+						</div>
+					</div>
+					<div class="page4-img-wrapper">
+						<img src="/page4img.png" alt="page4" class="page4img" />
+					</div>
+					<div class="page4-img-flex">
+						<div class="page4-img-text page4-img-text-margin text blue small">
+							<p class="orange text small">{{ ('rec') }}</p>
+							{{ ('offer') }}
+						</div>
+						<div class="page4-img-text page4-img-text-margin text blue small">
+							<p class="orange text small">{{ ('techVisit') }}</p>
+							{{ ('possible') }}
+							<p>{{ ('adOffer') }}</p>
+						</div>
+						<div class="page4-img-text page4-img-text-margin text blue small">
+							{{ ('tender') }}
+							<p>{{ ('accepted') }}</p>
+							<p />
+							<p class="orange text small">{{ ('instal') }}</p>
+						</div>
+						<div class="page4-img-text text blue">{{ ('benefit') }}<p class="orange text">{{ ('freeAnd') }}<p class="orange text">{{ ('energy') }}</p></p></div>
+					</div>
+					</div>
+					<div class="footer">
+						<p class="footer-text text">
+							EMAX {{ ('SPRL') }}, Brusselstraat 715, Dilbeek, Belgium
+						</p>
+						<p class="footer-text text footer-middle">
+							Tel: 02 425 04 00, info@emaxgroup.eu, www.emaxgroup.eu
+						</p>
+						<p class="footer-text text">
+							{{ ('btw') }} #: BE 0670429158, IBAN: BE71 7512 0847 5369, BIC: AXABBE22
+						</p>
+					</div>
+				</div>
+				<div class="page6 pdfPage" v-if="offerDetails.treeOneYear">
+					<div>
+						<div>
+							<p class="page2-header text bold">{{ ('foot') }}</p>
+						</div>
+						<div class="foot-en">
+							<div class="foot-flex">
+								<div class="foot-col2">
+									<img src="/tree.jpg" alt="tree" class="foot-img" />
+									<p class="text orange bold header center foot-head">
+										{{ ('treesSaved') }}
+									</p>
+									<div class="foot-col foot-left">
+										<p class="foot-num2 text bold">
+											{{ format(getProd(offerDetails.treeOneYear)) }}
+										</p>
+										<p class="foot-span text">{{ ('trees') }}</p>
+									</div>
+								</div>
+								<div class="foot-col2">
+									<img src="/CO2.png" alt="CO2" class="foot-img" />
+									<p class="text orange bold header center foot-head" v-html="('footyear')">
+									</p>
+									<div class="foot-flex">
+										<div class="foot-col">
+											<p class="foot-num2 text bold">
+												{{ format(getProd(offerDetails.carbonOneYear)) }} kg
+											</p>
+											<p class="foot-span text">CO<sub>2</sub>/{{ ('ye') }}</p>
+										</div>
+										<div class="foot-col">
+											<p class="foot-num2 text bold">
+												{{ format(getProd(offerDetails.carbonTwentyFiveYears)) }}
+												kg
+											</p>
+											<p class="foot-span text">CO<sub>2</sub>/ 25 {{ ('year') }}</p>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					<div>
+						<div>
+							<p class="page2-header text bold">{{ ('production') }}</p>
+						</div>
+						<div class="foot-col center-foot">
+							<p class="foot-num text bold">
+								{{ format(getProd(offerDetails.totalProduction)) }} kWh/{{
+									('ye')
+								}}
+							</p>
+						</div>
+						<div class="chart-wrapper4">
+							<ProChart
+								:data="customer"
+								:key="customer"
+								:width="650"
+								:height="400"
+								:options="{
+									responsive: true,
+									maintainAspectRatio: false,
+									legend: { display: false },
+									scales: {
+										yAxes: [
+											{
+												scaleLabel: {
+													display: true,
+													labelString: 'kWh',
+												},
+											},
+										],
+										xAxes: [
+											{
+												scaleLabel: {
+													display: true,
+													labelString: 'Month',
+												},
+											},
+										],
+									},
+								}"
+							/>
+							<p class="chart-header text foot-chart-label">{{ ('dSolar') }}</p>
+						</div>
+					</div>
+				</div>
+					<div class="footer-ind">
+						<p class="footer-text-ind text">
+							EMAX {{ ('SPRL') }}, Brusselstraat 715, Dilbeek, Belgium
+						</p>
+						<p class="footer-text-ind text footer-middle">
+							Tel: 02 425 04 00, info@emaxgroup.eu, www.emaxgroup.eu
+						</p>
+						<p class="footer-text-ind text">
+							{{ ('btw') }} #: BE 0670429158, IBAN: BE71 7512 0847 5369, BIC:
+							AXABBE22
+						</p>
+					</div>
+				</div>
+				<div class="page5 pdfPage">
+					<div>
+					<p class="page2-header text bold">
+						{{ ('conditions2') }}
+					</p>
+					<div class="page5-wrapper">
+						<p class="text orange">A: {{ ('price') }}</p>
+						<p
+							class="text blue smallPDFText"
+							v-if="lang === 'fr' || lang === 'en' || !lang"
+						>
+							Le prix indiqué dans cette offre comprend tous les services et
+							matériels nécessaires pour une
+							installation complète de panneaux solaires selon les règles de l'art.
+							Ce prix est engageant dans
+							l'hypothèse où la visite du collaborateur d'EMAX sprl ne sert qu'à
+							vérifier la faisabilité technique
+							de l'installation proposée.
+						</p>
+						<p class="text blue smallPDFText" v-if="lang === 'nl'">
+							De in deze offerte vermelde prijs omvat alle diensten en materialen
+							die nodig zijn voor een volledige
+							installatie van zonnepanelen volgens de regels van de kunst. Deze
+							prijs is bindend indien het bezoek
+							van de medewerker van EMAX {{ ('SPRL') }} enkel dient om de technische
+							haalbaarheid van de voorgestelde
+							installatie na te gaan.
+						</p>
+					</div>
+					<div class="page5-wrapper">
+						<p class="text orange">B. {{ ('payment') }}</p>
+						<p
+							class="text blue smallPDFText"
+							v-if="lang === 'fr' || lang === 'en' || !lang"
+						>
+							Les conditions de paiement indiquées dans ce devis s'appliquent
+							auxfactures présentés par Emax
+							bvba dans ce devis . La certification ne sera effectuée qu'après
+							paiement intégral. Les primes sont
+							enregistrées et demandées par le client sans engagement de la part
+							d'EMAX sprl.
+						</p>
+						<p class="text blue smallPDFText" v-if="lang === 'nl'">
+							De in deze offerte vermelde betalingsvoorwaarden zijn van toepassing
+							op de door EMAX {{ ('SPRL') }} in
+							deze offerte voorgestelde facturen. De certificering zal pas worden
+							uitgevoerd na volledige betaling.
+							De premies worden door de klant geregistreerd en aangevraagd zonder
+							enige verplichting voor
+							EMAX sprl.
+						</p>
+					</div>
+					<div class="page5-wrapper">
+						<p class="text orange">C. {{ ('leg') }}</p>
+						<p
+							class="text blue smallPDFText"
+							v-if="lang === 'fr' || lang === 'en' || !lang"
+						>
+							EMAX sprl se limite à la mise en œuvre technique de l'installation de
+							panneaux solaires. Le client
+							est responsable de l'installation de l'isolation et de toutes autres
+							exigences pour répondre aux
+							conditions fixées par Brugel pour l'obtention des primes. EMAX sprl ne
+							peut donc en aucun cas être
+							tenu responsable de ne pas percevoir de primes sur la base des
+							conditions ci-dessus.
+						</p>
+						<p class="text blue smallPDFText" v-if="lang === 'nl'">
+							EMAX {{ ('SPRL') }} beperkt zich tot de technische uitvoering van de
+							zonnepaneelinstallatie. De klant
+							is verantwoordelijk voor de installatie van de isolatie en alle andere
+							vereisten om te voldoen
+							aan de voorwaarden die Brugel stelt voor het verkrijgen van de
+							premies. EMAX {{ ('SPRL') }} kan dan ook
+							op geen enkele wijze aansprakelijk worden gesteld voor het niet
+							ontvangen van premies op basis
+							van bovenstaande voorwaarden.
+						</p>
+					</div>
+					<div class="page5-wrapper">
+						<p class="text orange">D. {{ ('ex') }}</p>
+						<p
+							class="text blue smallPDFText"
+							v-if="lang === 'fr' || lang === 'en' || !lang"
+						>
+							EMAX sprl ne procédera à la planification des travaux qu'après la
+							signature de ce devis, celui-ci
+							pouvant être confirmé par e-mail. Si au début des travaux, il apparaît
+							que la structure du toit n'est
+							pas adaptée à l'installation de panneaux solaires, EMAX sprl peut
+							résilier unilatéralement cet accord
+							avec remboursement de l'avance reçue et sans dette supplémentaire du
+							client. Si les matériaux
+							proposés ne sont pas (ou plus) disponibles, EMAX sprl proposera une
+							installation alternative
+							de panneaux solaires avec un prix de revient et un rendement
+							équivalent. Le client a le droit de
+							décider d'accepter ou non cette offre alternative. Si le client n'est
+							pas d'accord avec l'alternative
+							proposée, EMAX sprl remboursera immédiatement toutes les avances versées
+							par le client sans
+							réclamations supplémentairesx de la part du client. Si le nombre de
+							panneaux change entre la
+							commande et l'installation de l'installation de panneaux solaires, les
+							frais négatifs/supplémentaires
+							seront réglés sur la base du prix Wc du bon de commande.
+						</p>
+						<p class="text blue smallPDFText" v-if="lang === 'nl'">
+							EMAX {{ ('SPRL') }} zal pas overgaan tot de planning van de werken na
+							ondertekening van deze offerte,
+							die per e-mail kan bevestigd worden. Indien bij aanvang van de werken
+							blijkt dat de dakstructuur
+							niet geschikt is voor de installatie van zonnepanelen, kan EMAX {{ ('SPRL') }}
+							deze overeenkomst eenzijdig
+							beëindigen met terugbetaling van het ontvangen voorschot en zonder
+							bijkomende schuld in
+							hoofde van de klant. Indien de aangeboden materialen niet (meer)
+							beschikbaar zijn, zal EMAX {{ ('SPRL') }}
+							een alternatieve zonnepaneelinstallatie aanbieden met een
+							gelijkwaardige kostprijs en opbrengst.
+							De cliënt heeft het recht om te beslissen of hij al dan niet op dit
+							alternatieve aanbod ingaat. Indien de
+							opdrachtgever niet akkoord gaat met het voorgestelde alternatief, zal
+							EMAX {{ ('SPRL') }} alle door de
+							opdrachtgever betaalde voorschotten onmiddellijk terugbetalen zonder
+							enige verdere aanspraak van de opdrachtgever. Indien het aantal
+							panelen wijzigt tussen de bestelling en de installatie van het
+							zonnepanelensysteem, zullen de negatieve/extra kosten verrekend worden
+							op basis van
+							de Wp-prijs van de bestelbon.
+						</p>
+					</div>
+					<div class="page5-wrapper">
+						<p class="text orange">E. {{ ('res') }}</p>
+						<p
+							class="text blue smallPDFText"
+							v-if="lang === 'fr' || lang === 'en' || !lang"
+						>
+							EMAX sprl est seul responsable de l'exécution des travaux
+							d'installation et ne donne aucun conseil
+							concernant l'adéquation des structures ou des matériaux porteurs, la
+							structure du toit et la structure
+							de support, ou toute autre circonstance pouvant affecter la stabilité
+							de l'installation. Dans le cadre
+							de la performance d'EMAX sprl, il est de la seule responsabilité du
+							client d'obtenir des conseils de
+							conseillers professionnels concernant l'adéquation des structures ou
+							des matériaux porteurs, la
+							construction du toit et la structure de support, et d'autres facteurs
+							pertinents qui sont importants
+							pour la stabilité du travail effectué. Dans le cas où EMAX sprl
+							exécute les travaux sur la base de
+							conseils erronés de tiers et que des dommages sont causés au personnel
+							et/ou au matériel du client
+							et/ou au personnel et/ou au matériel d'EMAX sprl, les parties
+							récupèreront ce dommage de la part
+							du tiers responsable, indépendamment des autres recours légaux ou
+							contractuels. Les rendements
+							de l'installation de panneaux solaires indiqués dans ce devis sont
+							basés sur les spécifications
+							techniques du fabricant. En sa qualité d'installateur, EMAX sprl ne
+							peut être tenue responsable de
+							rendements inférieurs. Le client assume l'entière responsabilité de la
+							conformité du coffret de
+							distribution principal et de la mise à la terre à la réglementation en
+							vigueur (AREI).
+						</p>
+						<p class="text blue smallPDFText" v-if="lang === 'nl'">
+							EMAX {{ ('SPRL') }} is als enige verantwoordelijk voor de uitvoering van de
+							installatiewerken en geeft geen
+							advies betreffende de geschiktheid van de draagconstructies of
+							materialen, de dakstructuur en de
+							draagstructuur, of andere omstandigheden die de stabiliteit van de
+							installatie kunnen beïnvloeden.
+							In het kader van de prestaties van EMAX {{ ('SPRL') }} is het uitsluitend de
+							verantwoordelijkheid van de
+							opdrachtgever om bij professionele adviseurs advies in te winnen over
+							de geschiktheid van de
+							draagconstructies of materialen, de dakconstructie en draagstructuur,
+							en andere relevante
+							factoren die van belang zijn voor de stabiliteit van het uitgevoerde
+							werk. Indien EMAX {{ ('SPRL') }} het werk
+							uitvoert op basis van foutieve adviezen van derden en er schade wordt
+							toegebracht aan het personeel
+							en/of materiaal van de opdrachtgever en/of het personeel en/of
+							materiaal van EMAX {{ ('SPRL') }},
+							zullen partijen deze schade verhalen op de verantwoordelijke derde,
+							ongeacht andere wettelijke
+							of contractuele rechtsmiddelen. De in deze offerte vermelde
+							opbrengsten van de zonnepaneelinstallatie
+							zijn gebaseerd op de technische specificaties van de fabrikant. Als
+							installateur kan EMAX {{ ('SPRL') }}
+							niet verantwoordelijk gesteld worden voor lagere opbrengsten. De klant
+							neemt de volledige
+							verantwoordelijkheid op zich voor de conformiteit van de
+							hoofdverdeelkast en het
+							aardingssysteem met de geldende voorschriften (RINA).
+						</p>
+					</div>
+					<div
+						:class="
+							lang === 'fr' || lang === 'en'
+								? 'page5-wrapper'
+								: 'page5-wrapper'
+						"
+					>
+						<p class="text orange">F. {{ ('sur') }}</p>
+						<p
+							class="text blue smallPDFText"
+							v-if="lang === 'fr' || lang === 'en' || !lang"
+						>
+							EMAX sprl est responsable du raccordement des installations
+							photovoltaïques au réseau du client.
+							Il est de la responsabilité du client d'assurer une connexion Internet
+							stable. EMAX sprl n'est pas
+							responsable des modifications du réseau. S'il n'y a pas d'Internet
+							disponible, l'installation ne peut pas
+							être surveillée. EMAX sprl offre la possibilité d'installer un routeur
+							4G avec un abonnement de
+							données à un coût supplémentaire, afin que l'installation puisse être
+							surveillée.
+						</p>
+						<p class="text blue smallPDFText" v-if="lang === 'nl'">
+							EMAX {{ ('SPRL') }} staat in voor de aansluiting van de fotovoltaïsche
+							installaties op het net van de
+							klant. Het is de verantwoordelijkheid van de klant om voor een
+							stabiele internetverbinding te zorgen.
+							EMAX {{ ('SPRL') }} is niet verantwoordelijk voor wijzigingen in het net. Als er
+							geen internet beschikbaar
+							is, kan de installatie niet worden bewaakt. EMAX {{ ('SPRL') }} biedt de
+							mogelijkheid om tegen meerprijs een
+							4G router te installeren met een data-abonnement, zodat de installatie
+							kan worden opgevolgd.
+						</p>
+					</div>
+					</div>
+					<div class="footer">
+						<p class="footer-text text">
+							EMAX {{ ('SPRL') }}, Brusselstraat 715, Dilbeek, Belgium
+						</p>
+						<p class="footer-text text footer-middle">
+							Tel: 02 425 04 00, info@emaxgroup.eu, www.emaxgroup.eu
+						</p>
+						<p class="footer-text text">
+							{{ ('btw') }} #: BE 0670429158, IBAN: BE71 7512 0847 5369, BIC: AXABBE22
+						</p>
+					</div>
+				</div> -->
+			</div>
+		</div>
+	</body>
+</html>
